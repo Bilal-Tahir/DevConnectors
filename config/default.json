@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://bilaltahir_mongoatlas:11231Bilal1242@devconnectormern.taognic.mongodb.net/?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://bilaltahir_mongoatlas:11231Bilal1242@devconnectormern.taognic.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecretKey": "devConnector909838232"
 }
