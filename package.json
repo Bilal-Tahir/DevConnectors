@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Bilal-Tahir",
   "license": "ISC",
@@ -14,6 +16,7 @@
     "config": "^3.3.9",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
+    "font-awesome": "^4.7.0",
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.2",
