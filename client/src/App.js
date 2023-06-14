@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   // BrowserRouter as Router,
   Routes,
@@ -13,7 +14,13 @@ import './App.css';
 //Redux
 //Connect app with store
 import { Provider } from 'react-redux';
+import { loadUser } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
 import store from './store';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const routes = [
   { path: 'register', component: Register },
@@ -26,22 +33,28 @@ const ContainerRoute = ({ component: Component }) => (
   </section>
 );
 
-const App = () => (
-  <Provider store={store}>
-    <Navbar />
-    <Alert />
-    <Routes>
-      <Route path='/' element={<Landing />} />
-      {/* Every page has a class of container that will push everything into middle except Landing Page */}
-      {routes.map(({ path, component }) => (
-        <Route
-          key={path}
-          path={path}
-          element={<ContainerRoute component={component} />}
-        />
-      ))}
-    </Routes>
-  </Provider>
-);
+const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <Navbar />
+      <Alert />
+      <Routes>
+        <Route path='/' element={<Landing />} />
+        {/* Every page has a class of container that will push everything into middle except Landing Page */}
+        {routes.map(({ path, component }) => (
+          <Route
+            key={path}
+            path={path}
+            element={<ContainerRoute component={component} />}
+          />
+        ))}
+      </Routes>
+    </Provider>
+  );
+};
 
 export default App;
