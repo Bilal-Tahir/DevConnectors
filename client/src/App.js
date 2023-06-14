@@ -9,6 +9,8 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
+import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 
 //Redux
@@ -23,8 +25,9 @@ if (localStorage.token) {
 }
 
 const routes = [
-  { path: 'register', component: Register },
-  { path: 'login', component: Login },
+  { path: '/register', component: Register },
+  { path: '/login', component: Login },
+  { path: '/dashboard', component: Dashboard, isProtected: true },
 ];
 
 const ContainerRoute = ({ component: Component }) => (
@@ -45,12 +48,18 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Landing />} />
         {/* Every page has a class of container that will push everything into middle except Landing Page */}
-        {routes.map(({ path, component }) => (
-          <Route
-            key={path}
-            path={path}
-            element={<ContainerRoute component={component} />}
-          />
+        {routes.map(({ path, component, isProtected }) => (
+          <>
+            <Route
+              key={path}
+              path={path}
+              element={
+                <PrivateRoute isProtectedRoute={isProtected}>
+                  <ContainerRoute component={component} />
+                </PrivateRoute>
+              }
+            />
+          </>
         ))}
       </Routes>
     </Provider>
