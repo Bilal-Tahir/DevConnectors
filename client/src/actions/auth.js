@@ -5,12 +5,14 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOG_OUT,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
 // LOAD USER
 export const loadUser = () => async (dispatch) => {
-  // debugger;
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -18,7 +20,6 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/auth');
 
-    debugger;
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -49,9 +50,10 @@ export const register =
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
+
+      dispatch(loadUser());
     } catch (error) {
       const errors = error.response.data.error;
-      debugger;
 
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
@@ -61,3 +63,40 @@ export const register =
       });
     }
   };
+
+// Login the User
+export const login = (email, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post('/api/auth', body, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+
+    dispatch(loadUser());
+  } catch (error) {
+    const errors = error.response.data.error;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
+//Logout
+export const logOut = () => (dispatch) => {
+  console.log('yes');
+  dispatch({ type: LOG_OUT });
+};
