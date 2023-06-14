@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 // import axios from 'axios';
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,6 +32,12 @@ const Register = ({ setAlert, register }) => {
       register({ name, email, password });
     }
   };
+
+  // Redirect if login
+  if (isAuthenticated) {
+    return <Navigate to='/dashboard' />;
+  }
+
   return (
     <>
       <h1 className='large text-primary'>Sign Up</h1>
@@ -93,9 +99,14 @@ const Register = ({ setAlert, register }) => {
 };
 
 Register.propTypes = {
+  isAuthenticated: PropTypes.bool,
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
 // When we import it we have to export it this way
 // It takes 2 things
@@ -103,4 +114,4 @@ Register.propTypes = {
 // 2. Second is object with any actions we want to use
 // {setAlert} is gonna let us do props.setAlert
 // It's alternative would be useSelector
-export default connect(null, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register })(Register);
