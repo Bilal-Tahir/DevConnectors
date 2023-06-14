@@ -97,6 +97,5 @@ export const login = (email, password) => async (dispatch) => {
 
 //Logout
 export const logOut = () => (dispatch) => {
-  console.log('yes');
   dispatch({ type: LOG_OUT });
 };
