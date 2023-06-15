@@ -12,6 +12,8 @@ import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile-form/CreateProfile';
 import EditProfile from './components/profile-form/EditProfile';
+import AddExperience from './components/profile-form/AddExperience';
+import AddEducation from './components/profile-form/AddEducation';
 import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 
@@ -32,6 +34,8 @@ const routes = [
   { path: '/dashboard', component: Dashboard, isProtected: true },
   { path: '/create-profile', component: CreateProfile, isProtected: true },
   { path: '/edit-profile', component: EditProfile, isProtected: true },
+  { path: '/add-experience', component: AddExperience, isProtected: true },
+  { path: '/add-education', component: AddEducation, isProtected: true },
 ];
 
 const ContainerRoute = ({ component: Component }) => (

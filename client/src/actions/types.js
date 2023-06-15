@@ -17,3 +17,5 @@ export const PROFILE_ERROR = 'PROFILE_ERROR';
 // We still have previous user profile in state
 // So we want to clear profile on logout
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
+// Add and Update Profile for experience and education
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
