@@ -99,7 +99,7 @@ const AddEducation = ({ addEducation }) => {
                 });
               }}
             />{' '}
-            Current Job
+            Current School
           </p>
         </div>
         <div class='form-group'>
