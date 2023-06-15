@@ -1,28 +1,42 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Spinner from '../layout/Spinner';
 import { getCurrentProfile } from '../../actions/profile';
 
-const Dashboard = ({ getCurrentProfile, auth, profile }) => {
+const Dashboard = ({
+  getCurrentProfile,
+  auth: { user },
+  profile: { profile, loading },
+}) => {
   // We want to call getCurrentProfile as soon as it loads
   useEffect(() => {
     getCurrentProfile();
   }, []);
 
-  return (
-    <div>
-      here are many variations of passages of Lorem Ipsum available, but the
-      majority have suffered alteration in some form, by injected humour, or
-      randomised words which don't look even slightly believable. If you are
-      going to use a passage of Lorem Ipsum, you need to be sure there isn't
-      anything embarrassing hidden in the middle of text. All the Lorem Ipsum
-      generators on the Internet tend to repeat predefined chunks as necessary,
-      making this the first true generator on the Internet. It uses a dictionary
-      of over 200 Latin words, combined with a handful of model sentence
-      structures, to generate Lorem Ipsum which looks reasonable. The generated
-      Lorem Ipsum is therefore always free from repetition, injected humour, or
-      non-characteristic words etc.
-    </div>
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
+    <>
+      <h1 className='large text-primary'>Dashboard</h1>
+      <p className='lead'>
+        <i className='fa da-user' />
+        Welcome {user && user.name}
+      </p>
+      {profile !== null ? (
+        <>Has</>
+      ) : (
+        <>
+          <p>
+            You have not yet setup a profile, please add some info
+            <Link to='create-profile' className='btn btn-primary my-1'>
+              Create Profile
+            </Link>
+          </p>
+        </>
+      )}
+    </>
   );
 };
 
