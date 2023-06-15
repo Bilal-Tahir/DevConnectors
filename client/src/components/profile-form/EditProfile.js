@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // withRouter for getting history object deprecated in v6
 // So using useNavigate
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile } from '../../actions/profile';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
 
-const CreateProfile = ({ createProfile }) => {
+const EditProfile = ({
+  createProfile,
+  getCurrentProfile,
+  profile: { profile, loading },
+}) => {
   const history = useNavigate();
   const [formData, setFormData] = useState({
     company: '',
@@ -23,6 +27,47 @@ const CreateProfile = ({ createProfile }) => {
     instagram: '',
   });
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+
+  useEffect(() => {
+    getCurrentProfile();
+
+    setFormData({
+      company: loading || !profile.company ? '' : profile.company,
+      website: loading || !profile.website ? '' : profile.website,
+      location: loading || !profile.location ? '' : profile.location,
+      status: loading || !profile.status ? '' : profile.status,
+      skills: loading || !profile.skills ? '' : profile.skills.join(','),
+      githubusername:
+        loading || !profile.githubusername ? '' : profile.githubusername,
+      bio: loading || !profile.bio ? '' : profile.bio,
+      twitter: loading || !profile.social ? '' : profile.social.twitter,
+      facebook: loading || !profile.social ? '' : profile.social.facebook,
+      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
+      youtube: loading || !profile.social ? '' : profile.social.youtube,
+      instagram: loading || !profile.social ? '' : profile.social.instagram,
+    });
+  }, [
+    getCurrentProfile,
+    loading,
+    profile.bio,
+    profile.company,
+    profile.facebook,
+    profile.githubusername,
+    profile.instagram,
+    profile.linkedin,
+    profile.location,
+    profile.skills,
+    profile.social,
+    profile.social.facebook,
+    profile.social.instagram,
+    profile.social.linkedin,
+    profile.social.twitter,
+    profile.social.youtube,
+    profile.status,
+    profile.twitter,
+    profile.website,
+    profile.youtube,
+  ]);
 
   const {
     company,
@@ -50,7 +95,7 @@ const CreateProfile = ({ createProfile }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    createProfile(formData, history);
+    createProfile(formData, history, true);
   };
 
   return (
@@ -231,8 +276,16 @@ const CreateProfile = ({ createProfile }) => {
   );
 };
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createProfile })(CreateProfile);
+const mapStateToProps = (state) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+  EditProfile
+);
