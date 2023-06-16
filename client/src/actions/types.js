@@ -11,6 +11,8 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOG_OUT = 'LOG_OUT';
 // Profile Types
 export const GET_PROFILE = 'GET_PROFILE';
+export const GET_PROFILES = 'GET_PROFILES';
+export const GET_REPOS = 'GET_REPOS';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 // Let's say when we login with a user that has a profile and
 // logout and then login again with another user that has no profile
