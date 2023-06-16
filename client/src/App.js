@@ -14,6 +14,7 @@ import CreateProfile from './components/profile-form/CreateProfile';
 import EditProfile from './components/profile-form/EditProfile';
 import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
+import Profiles from './components/profiles/Profiles';
 import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 
@@ -31,6 +32,7 @@ if (localStorage.token) {
 const routes = [
   { path: '/register', component: Register },
   { path: '/login', component: Login },
+  { path: '/profiles', component: Profiles },
   { path: '/dashboard', component: Dashboard, isProtected: true },
   { path: '/create-profile', component: CreateProfile, isProtected: true },
   { path: '/edit-profile', component: EditProfile, isProtected: true },
