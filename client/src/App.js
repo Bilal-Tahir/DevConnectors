@@ -16,6 +16,8 @@ import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
+import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 
@@ -40,6 +42,8 @@ const routes = [
   { path: '/edit-profile', component: EditProfile, isProtected: true },
   { path: '/add-experience', component: AddExperience, isProtected: true },
   { path: '/add-education', component: AddEducation, isProtected: true },
+  { path: '/posts', component: Posts, isProtected: true },
+  { path: '/post/:id', component: Post, isProtected: true },
 ];
 
 const ContainerRoute = ({ component: Component }) => (
